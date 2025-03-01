@@ -56,16 +56,16 @@ const Explore = () => {
 
   const fetchResources = async () => {
     try {
-      const response = await storage.listFiles('67bf43a6000a31271db4');
+      const response = await storage.listFiles('67c16eff000e31782c72');
       const files = response.files.map(file => ({
         id: file.$id,
         name: file.name,
         faculty: "Faculty Name",
         semester: file.$metadata?.semester || "Unknown",
         // Generate PDF thumbnail URL using Appwrite's getFilePreview
-        thumbnailUrl: storage.getFilePreview('67bf43a6000a31271db4', file.$id, 400, 300, 'center', 100),
-        viewUrl: storage.getFileView('67bf43a6000a31271db4', file.$id),
-        downloadUrl: storage.getFileDownload('67bf43a6000a31271db4', file.$id),
+        thumbnailUrl: storage.getFilePreview('67c16eff000e31782c72', file.$id, 400, 300, 'center', 100),
+        viewUrl: storage.getFileView('67c16eff000e31782c72', file.$id),
+        downloadUrl: storage.getFileDownload('67c16eff000e31782c72', file.$id),
       }));
       setResources(files);
     } catch (error) {
@@ -107,7 +107,7 @@ const Explore = () => {
       </div>
         
       <div className="container mx-auto p-8">
-        <h1 className="text-6xl font-bold mb-8 bg-emerald-800    text-white text-center rounded-md py-8 hover:shadow-lg">Explore Resources</h1>
+        <h1 className="text-3xl font-bold mb-8">Explore Resources for 1st sem</h1>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {resources.map((item) => (
@@ -119,7 +119,7 @@ const Explore = () => {
                 {/* PDF Thumbnail from Appwrite */}
                 <div className="relative h-48 w-full cursor-pointer" onClick={() => setSelectedpdf(item.viewUrl)}>
   <img
-    src= 'https://www.pcworld.com/wp-content/uploads/2025/01/pdf-icon-1.jpg?quality=50&strip=all'
+    src= 'https://t3.ftcdn.net/jpg/02/26/42/06/360_F_226420649_vlXjp3JyUrnW5EHY00dvhbqkVdUfyafj.jpg'
     alt={item.name}
     className="w-full h-full object-cover"
   />

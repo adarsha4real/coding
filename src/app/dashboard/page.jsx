@@ -1,310 +1,165 @@
-'use client'
-import Link from 'next/link'
-import { useState } from 'react'
+'use client';
 
-export default function Syllabus() {
-  const [dropdowns, setDropdowns] = useState({
-    electronics: false,
-    computer: false
-  })
-  const [selectedSemester, setSelectedSemester] = useState(null)
-  const [selectedDepartment, setSelectedDepartment] = useState(null)
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { Client, Storage, ID, Permission, Role } from 'appwrite';
 
-  const toggleDropdown = (menu) => {
-    setDropdowns(prev => ({
-      ...prev,
-      [menu]: !prev[menu]
-    }))
-  }
+const Explore = () => {
+  const [resources, setResources] = useState([]);
+  const [selectedpdf, setSelectedpdf] = useState(null);
 
-  const handleSemesterClick = (department, semester) => {
-    setSelectedDepartment(department)
-    setSelectedSemester(semester)
-  }
+  const client = new Client()
+    .setEndpoint('https://cloud.appwrite.io/v1') // Your Appwrite Endpoint
+    .setProject('67bec974003d56663d8a'); // Your Project ID
+  
+  const storage = new Storage(client);
 
-  const renderMainContent = () => {
-    if (!selectedSemester) {
-      return (
-        <>
-          <h1 className="text-3xl font-bold mb-6">Welcome to Our Course Portal</h1>
-          <div className="space-y-6">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit.</p>
-          </div>
-        </>
-      )
-    }
-        
-    return (
-      <>
-        <h1 className="text-3xl font-bold mb-6">
-          {selectedDepartment} - Semester {selectedSemester}
-        </h1>
-        <div className="space-y-6">
-          <p>This is the syllabus content for {selectedDepartment} department, semester {selectedSemester}</p>
-
-          {
-            selectedSemester === 1 && selectedDepartment === 'Electronics' && (
-              <div className="space-y-2">
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Drawing</h3>
-                  <p className="text-gray-600">Engineering drawing fundamentals and techniques</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Math</h3>
-                  <p className="text-gray-600">Advanced mathematics and calculus</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Digital Electronics</h3>
-                  <p className="text-gray-600">Digital electronics and logic design</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Basic Electrical</h3>
-                  <p className="text-gray-600">engineering electrical subject</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Physics</h3>
-                  <p className="text-gray-600">engineering physics I</p>
-                </div>
-              </div>
-            )
-          }
-          {
-            selectedSemester === 2 && selectedDepartment === 'Electronics' && (
-              <div className="space-y-2">
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Network Analysis</h3>
-                  <p className="text-gray-600">Circuit analysis and network theorems</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Mathematics II</h3>
-                  <p className="text-gray-600">Advanced calculus and linear algebra</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Electronic Devices</h3>
-                  <p className="text-gray-600">Semiconductor devices and circuits</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Digital Electronics</h3>
-                  <p className="text-gray-600">Logic gates and boolean algebra</p>
-                </div>
-              </div>
-            )
-          }{
-            selectedSemester === 3 && selectedDepartment === 'Electronics' && (
-              <div className="space-y-2">
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">control system</h3>
-                  <p className="text-gray-600">control system in engineering</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Mathematics II</h3>
-                  <p className="text-gray-600">Advanced calculus and linear algebra</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">EMX</h3>
-                  <p className="text-gray-600">electromagnetics</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">EDC</h3>
-                  <p className="text-gray-600">electronic device and circuit</p>
-                </div>
-              </div>
-            )
-          }{
-            selectedSemester === 4 && selectedDepartment === 'Electronics' && (
-              <div className="space-y-2">
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Numerical method</h3>
-                  <p className="text-gray-600">numericals on engineering</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Mathematics IV</h3>
-                  <p className="text-gray-600">Advanced calculus and linear algebra</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">CG</h3>
-                  <p className="text-gray-600">computer graphics</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">DSA</h3>
-                  <p className="text-gray-600">data structure and algorithms</p>
-                </div>
-              </div>
-            )
-          }{
-            selectedSemester === 5 && selectedDepartment === 'Electronics' && (
-              <div className="space-y-2">
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">filter design</h3>
-                  <p className="text-gray-600">filter analysis and network theorems</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Economics</h3>
-                  <p className="text-gray-600">Advanced economics and linear algebra</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">DBMS</h3>
-                  <p className="text-gray-600">database management systems</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">operating system</h3>
-                  <p className="text-gray-600">Logic gates and boolean algebra</p>
-                </div>
-              </div>
-            )
-          }
-          {
-            selectedSemester === 1 && selectedDepartment === 'Computer' && (
-              <div className="space-y-2">
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Object Oriented Programming</h3>
-                  <p className="text-gray-600">Programming concepts and methodologies</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Mathematics II</h3>
-                  <p className="text-gray-600">Advanced calculus and linear algebra</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Data Structures</h3>
-                  <p className="text-gray-600">Basic data structures and algorithms</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Digital Logic Design</h3>
-                  <p className="text-gray-600">Boolean algebra and logic circuits</p>
-                </div>
-              </div>
-            )
-          }
-          {
-            selectedSemester === 2 && selectedDepartment === 'Computer' && (
-              <div className="space-y-2">
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Data Structures</h3>
-                  <p className="text-gray-600">Advanced data structures and algorithms</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Computer Architecture</h3>
-                  <p className="text-gray-600">Computer organization and design</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Digital Signal Processing</h3>
-                  <p className="text-gray-600">Signal analysis and processing</p>
-                </div>
-              </div>
-            )
-          }
-          {
-            selectedSemester === 3 && selectedDepartment === 'Computer' && (
-              <div className="space-y-2">
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Operating Systems</h3>
-                  <p className="text-gray-600">OS concepts and implementation</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Database Management</h3>
-                  <p className="text-gray-600">Database design and SQL</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Computer Networks</h3>
-                  <p className="text-gray-600">Network protocols and architecture</p>
-                </div>
-              </div>
-            )
-          }
-          {
-            selectedSemester === 4 && selectedDepartment === 'Computer' && (
-              <div className="space-y-2">
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Software Engineering</h3>
-                  <p className="text-gray-600">Software development lifecycle</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Artificial Intelligence</h3>
-                  <p className="text-gray-600">AI concepts and applications</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">Web Technologies</h3>
-                  <p className="text-gray-600">Web development and frameworks</p>
-                </div>
-              </div>
-            )
-          }{
-            selectedSemester === 5 && selectedDepartment === 'Computer' && (
-              <div className="space-y-2">
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">CN</h3>
-                  <p className="text-gray-600">computer network</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">DBMS</h3>
-                  <p className="text-gray-600">database management system</p>
-                </div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer rounded">
-                  <h3 className="font-semibold">embeded system</h3>
-                  <p className="text-gray-600">embeded knowledge</p>
-                </div>
-              </div>
-            )
-          }
-        </div>
-      </>
-    )
-  } 
-   return (
-    <div className="flex">
-      {/* Sidebar */}
-      <div className="w-64 min-h-screen bg-gray-800 text-white p-4">
-        <div className="mb-4">
-          <button
-            onClick={() => toggleDropdown('electronics')}
-            className="w-full text-left p-2 hover:bg-gray-700 rounded"
-          >
-            Electronics ▼
-          </button>
-          {dropdowns.electronics && (
-            <div className="ml-4">
-              {[1, 2, 3, 4, 5].map((item) => (
-                <div 
-                  key={item} 
-                  className="p-2 hover:bg-gray-700 cursor-pointer"
-                  onClick={() => handleSemesterClick('Electronics', item)}
-                >
-                  {item} semester
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className="mb-4">
-          <button
-            onClick={() => toggleDropdown('computer')}
-            className="w-full text-left p-2 hover:bg-gray-700 rounded"
-          >
-            Computer ▼
-          </button>
-          {dropdowns.computer && (
-            <div className="ml-4">
-              {[1, 2, 3, 4, 5].map((item) => (
-                <div 
-                  key={item} 
-                  className="p-2 hover:bg-gray-700 cursor-pointer"
-                  onClick={() => handleSemesterClick('Computer', item)}
-                >
-                  {item} semester
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-
-     {/* Main Content */}
-      <div className="flex-1 p-8">
-        {renderMainContent()}
+  const PdfViewerModal = ({ pdfUrl, onClose }) => (
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+      <div className="bg-white w-11/12 h-5/6 rounded-lg overflow-hidden relative">
+        {/* Close button at the top corner */}
+        <button 
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        {/* PDF iframe for viewing */}
+        <iframe src={pdfUrl} className="w-full h-full" title="PDF Viewer" />
       </div>
     </div>
-  )
-}
+  );
+
+  const handleFileSelect = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      try {
+        const result = await storage.createFile(
+          '67bf43a6000a31271db4', // Your bucket ID
+          ID.unique(),
+          file,
+          [Permission.read(Role.any())] // Allow anyone to read the file
+        );
+        console.log('Upload successful:', result);
+        fetchResources(); // Refresh the list after upload
+      } catch (error) {
+        console.log('Upload error:', error);
+      }
+    }
+  };
+  
+  useEffect(() => {
+    fetchResources();
+  }, []);
+
+  const fetchResources = async () => {
+    try {
+      const response = await storage.listFiles('67bf43a6000a31271db4');
+      const files = response.files.map(file => ({
+        id: file.$id,
+        name: file.name,
+        faculty: "Faculty Name",
+        semester: file.$metadata?.semester || "Unknown",
+        // Generate PDF thumbnail URL using Appwrite's getFilePreview
+        thumbnailUrl: storage.getFilePreview('67bf43a6000a31271db4', file.$id, 400, 300, 'center', 100),
+        viewUrl: storage.getFileView('67bf43a6000a31271db4', file.$id),
+        downloadUrl: storage.getFileDownload('67bf43a6000a31271db4', file.$id),
+      }));
+      setResources(files);
+    } catch (error) {
+      console.error('Error fetching files:', error);
+    }
+  };
+
+  return (
+    <div>
+      <div className="container mx-auto p-4 relative">
+        <div className="fixed bottom-8 right-68 z-50">
+          <input
+            type="file"
+            accept=".pdf"
+            onChange={handleFileSelect}
+            className="hidden"
+            id="pdf-upload"
+          />
+          <label
+            htmlFor="pdf-upload"
+            className="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-4 cursor-pointer shadow-lg flex items-center justify-center w-16 h-16 transition-all duration-300 hover:scale-110"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-8 h-8"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 4.5v15m7.5-7.5h-15"
+              />
+            </svg>
+          </label>
+        </div>
+      </div>
+        
+      <div className="container mx-auto p-8">
+        <h1 className="text-3xl font-bold mb-8">Explore Resources</h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {resources.map((item) => (
+            <div key={item.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
+              <div 
+                className="relative h-48 w-full cursor-pointer"
+                onClick={() => setSelectedpdf(item.viewUrl)}
+              >
+                {/* PDF Thumbnail from Appwrite */}
+                <div className="relative h-48 w-full cursor-pointer" onClick={() => setSelectedpdf(item.viewUrl)}>
+  <img
+    src= 'https://www.pcworld.com/wp-content/uploads/2025/01/pdf-icon-1.jpg?quality=50&strip=all'
+    alt={item.name}
+    className="w-full h-full object-cover"
+  />
+  {/* Rest of your code */}
+</div>
+                <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                  <div className="text-white bg-blue-500 bg-opacity-90 p-2 rounded-full">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="p-4">
+                <h2 className="text-xl font-semibold mb-2">{item.name}</h2>
+                <p className="text-gray-600 mb-4">Faculty: {item.faculty}</p>
+                <p className="text-gray-600 mb-4">Semester: {item.semester}</p>
+                
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.open(item.downloadUrl, '_blank');
+                  }}
+                  className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition duration-300"
+                >
+                  Download PDF
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <div className="container mx-auto p-8"></div> 
+      </div>
+      
+      {selectedpdf && <PdfViewerModal pdfUrl={selectedpdf} onClose={() => setSelectedpdf(null)} />}
+    </div>
+  );
+};
+
+export default Explore;
