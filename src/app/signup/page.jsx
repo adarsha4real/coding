@@ -2,9 +2,11 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import {account, databases, client} from '../config/config'
 
 const UserSignup = () => {
   const router = useRouter()
+
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -22,20 +24,43 @@ const UserSignup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
+      
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match')
       return
     }
-
+  
     try {
-      // Add your API call here for user registration
+      // Create user account
+      await account.create(
+        'unique()', 
+        formData.email,
+        formData.password,
+       
+        
+      )
+      
+      // Store user data in database
+      await databases.createDocument(
+        
+        '67c03c0f002b5d90d571',
+        '67c03a5b002163449de8',
+        'unique()',
+        {
+          fullName: formData.fullName,
+          email: formData.email,
+          password: formData.password
+        }
+      )
+      
       console.log('Registration data:', formData)
       router.push('/login')
     } catch (err) {
+      console.error(err)
       setError('Registration failed')
     }
   }
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
